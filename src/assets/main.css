@@ -1,0 +1,42 @@
+/* 重置所有元素的内外边距 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* 设置 box-sizing 为 border-box，以便宽度和高度包括内边距和边框，但不包括外边距 */
+}
+
+/* 重置列表元素样式 */
+ul,
+ol {
+  list-style: none; /* 移除列表样式 */
+}
+
+/* 重置链接样式 */
+a {
+  text-decoration: none; /* 移除下划线 */
+  color: inherit; /* 继承父元素的文本颜色 */
+}
+
+/* 重置按钮样式 */
+button {
+  background: none; /* 移除背景色 */
+  border: none; /* 移除边框 */
+  padding: 0; /* 移除内边距 */
+  cursor: pointer; /* 设置光标为指针 */
+}
+
+/* 重置输入框样式 */
+input,
+textarea,
+select {
+  appearance: none; /* 阻止浏览器默认样式 */
+  border-radius: 0; /* 移除圆角 */
+  padding: 0; /* 移除内边距 */
+  border: none; /* 移除边框 */
+  outline: none; /* 移除外边框 */
+}
+
+/* 添加其他重置样式或自定义样式 */
+html,body {
+  height: 100%;
+}
