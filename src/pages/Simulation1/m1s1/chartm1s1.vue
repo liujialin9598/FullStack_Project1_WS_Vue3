@@ -1,9 +1,9 @@
 <template>
   <div class="charts">
-    <div v-for="(item, id) in items" :key="id" class="chart">
+    <div v-for="(item, index) in items" :key="index" class="chart" >
       <SmoothedLineChart
-        :xdata="data.map((i) => i.Age)"
-        :ydata="data.map((i) => i[item])"
+        :xdata="data.map((i:any) => i.Age)"
+        :ydata="data.map((i:any) => i[item])"
         :yname="item"
         :xname="'Age'"
       ></SmoothedLineChart>
@@ -20,14 +20,19 @@ const items = [
   "I(t)",
   "I(t)/P",
   "B",
+  "Loss(t)",
+  "PR(t)",
   "B/P",
   "inf",
   "r(t)",
+  "Z2",
   "P",
   "Pen",
+  "Y",
 ];
 
 defineProps(["data"]);
+
 </script>
 
 <style scoped>
@@ -36,7 +41,7 @@ defineProps(["data"]);
   margin-left: 20px;
   flex-wrap: wrap;
 }
-.chart{
+.chart {
   margin: 10px;
 }
 </style>

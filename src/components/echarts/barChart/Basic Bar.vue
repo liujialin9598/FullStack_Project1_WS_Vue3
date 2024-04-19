@@ -61,7 +61,7 @@ onMounted(() => {
       series: [
         {
           data: props.ydata,
-          type: "line",
+          type: "bar",
           smooth: true,
         },
       ],

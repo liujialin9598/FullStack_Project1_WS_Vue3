@@ -45,5 +45,6 @@ const handleSelect = (key: string, keyPath: string[]) => {
 }
 .header_menu{
     width: 100%;
+    height: 100%;
 }
 </style>

@@ -8,8 +8,14 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Aside: typeof import('./src/components/aside/aside.vue')['default']
+    Bar: typeof import('./src/components/echarts/barChart/Basic Bar.vue')['default']
+    'Basic Bar': typeof import('./src/components/echarts/barChart/Basic Bar.vue')['default']
+    'Basic Scatter Chart': typeof import('./src/components/echarts/ScatterChart/Basic Scatter Chart.vue')['default']
+    Chart: typeof import('./src/components/echarts/lineChart/Smoothed Line Chart.vue')['default']
     Container: typeof import('./src/components/backup/container.vue')['default']
+    copy: typeof import('./src/components/Elplus/Virtualized Table copy.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElAutoResizer: typeof import('element-plus/es')['ElAutoResizer']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElForm: typeof import('element-plus/es')['ElForm']
@@ -20,10 +26,14 @@ declare module 'vue' {
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTableV2: typeof import('element-plus/es')['ElTableV2']
     Header: typeof import('./src/components/header/header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     'Smoothed Line Chart': typeof import('./src/components/echarts/lineChart/Smoothed Line Chart.vue')['default']
+    Table: typeof import('./src/components/Elplus/Virtualized Table.vue')['default']
+    'Virtualized Table': typeof import('./src/components/Elplus/Virtualized Table.vue')['default']
   }
 }

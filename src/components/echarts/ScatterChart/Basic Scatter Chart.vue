@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
-const props = defineProps(["xdata", "ydata", "xname", "yname"]);
+const props = defineProps(["ydata", "xname", "yname"]);
 const echartsContainer = ref<HTMLElement | null>(null);
 
 onMounted(() => {
@@ -38,13 +38,10 @@ onMounted(() => {
         },
       },
       xAxis: {
-        type: "category",
-        data: props.xdata,
         name: props.xname,
-        nameGap: 5,
       },
       yAxis: {
-        type: "value",
+        name: props.yname,
         axisLabel: {
           formatter: function (value: number) {
             if (value >= 100000) {
@@ -60,16 +57,15 @@ onMounted(() => {
       },
       series: [
         {
+          symbolSize: 20,
           data: props.ydata,
-          type: "line",
-          smooth: true,
+          type: "scatter",
         },
       ],
     };
 
     // 使用配置项和数据绘制图表
     myChart.setOption(option);
-
 
     // 监听数据变化
     watch(props, () => {
@@ -87,7 +83,6 @@ onMounted(() => {
       });
     });
   }
-
 });
 </script>
 
