@@ -6,8 +6,12 @@
           <el-button type="primary" @click="onSubmit"
             >run new simulation</el-button
           >
-          <el-button type="default" @click="getDefaultValue"
+          <el-button type="success" @click="getDefaultValue"
             >get default value</el-button
+          >
+
+          <el-button type="warning" @click="setDefaultValue" class="setdefault"
+            >set default value</el-button
           >
         </el-form-item>
         <div v-for="(value, key) in data" :key="value">
@@ -21,7 +25,6 @@
 
     <el-scrollbar class="view" :v-if="resultData">
       <CHART :data="resultData"></CHART>
-      <VirtualizedTable :data="resultData" :columns="col" class="table" />
     </el-scrollbar>
   </div>
 </template>
@@ -30,10 +33,6 @@
 import { onBeforeMount, reactive, ref } from "vue";
 import axios from "axios";
 import CHART from "./chartm1s2.vue";
-import VirtualizedTable from "@/components/Elplus/Virtualized Table.vue";
-
-const col=ref<any[]>(["Age","W","Y","W+Y"]);
-
 
 // 定义响应式变量
 const data = ref<any>(null);
@@ -109,7 +108,6 @@ const onSubmit = async () => {
   localStorage.setItem("default_value_for_m1s2_result", response.data);
   resultData.value = JSON.parse(response.data);
   loading.value = false;
-
 };
 
 const getDefaultValue = async () => {
@@ -118,6 +116,10 @@ const getDefaultValue = async () => {
   const response_default = await axios.get("/api/m1s2/default/");
   Object.assign(form, response_default.data);
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
+};
+
+const setDefaultValue = async () => {
+  await axios.get("/api/m1s2/default/", { params: form });
 };
 </script>
 
@@ -139,8 +141,8 @@ const getDefaultValue = async () => {
   height: 94vh;
   width: calc(100% - 250px); /* 使用calc()函数确保总宽度不超过main元素的宽度 */
 }
-.table {
-  padding: 30px;
-  width: 700px;
+.setdefault {
+  margin-top: 10px;
+  margin-left: 135px;
 }
 </style>

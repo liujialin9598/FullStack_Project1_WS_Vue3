@@ -7,11 +7,32 @@
         :xname="item[0]"
       ></BasicBar>
     </div>
+    <VirtualizedTable :data="data" :columns="col" class="table" />
+
+    <div v-for="(item, index) in sactter" :key="index" class="DataTransformSimpleAggregate">
+      <DataTransformSimpleAggregate
+        :xdata="data.map((i:any) => i[item[0]])"
+        :ydata="data.map((i:any) => i[item[1]])"
+        :yname="item[1]"
+        :xname="item[0]"
+      ></DataTransformSimpleAggregate>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import BasicBar from "@/components/echarts/barChart/Basic Bar.vue";
+import VirtualizedTable from "@/components/Elplus/Virtualized Table.vue";
+import DataTransformSimpleAggregate from "@/components/echarts/boxPlot/Data Transform Simple Aggregate.vue";
+
+import { ref } from "vue";
+
+const col = ref<any[]>(["Age", "W", "Y", "W+Y"]);
+
+const sactter = ref<any[]>([["Age", "W+Y"]]);
+
+defineProps(["data"]);
+
 const Baritems: [string, number][] = [
   ["Age", 1],
   ["W", 5],
@@ -83,8 +104,6 @@ function groupData(data: number[], groupSize: number): string[] {
 
   return groupd;
 }
-
-defineProps(["data"]);
 </script>
 
 <style scoped>
@@ -95,5 +114,16 @@ defineProps(["data"]);
 }
 .chart {
   margin: 10px;
+}
+
+.table {
+  padding: 10px;
+  width: 700px;
+}
+
+.DataTransformSimpleAggregate{
+  padding: 10px;
+  width: 1150px;
+  height: 400px;
 }
 </style>

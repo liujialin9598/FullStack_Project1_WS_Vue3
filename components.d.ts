@@ -7,12 +7,15 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Aggregate: typeof import('./src/components/echarts/boxPlot/Data Transform Simple Aggregate.vue')['default']
     Aside: typeof import('./src/components/aside/aside.vue')['default']
     Bar: typeof import('./src/components/echarts/barChart/Basic Bar.vue')['default']
     'Basic Bar': typeof import('./src/components/echarts/barChart/Basic Bar.vue')['default']
     'Basic Scatter Chart': typeof import('./src/components/echarts/ScatterChart/Basic Scatter Chart.vue')['default']
     Chart: typeof import('./src/components/echarts/lineChart/Smoothed Line Chart.vue')['default']
     Container: typeof import('./src/components/backup/container.vue')['default']
+    copy: typeof import('./src/components/echarts/lineChart/Smoothed Multiple Line Chart copy.vue')['default']
+    'Data Transform Simple Aggregate': typeof import('./src/components/echarts/boxPlot/Data Transform Simple Aggregate.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAutoResizer: typeof import('element-plus/es')['ElAutoResizer']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -31,6 +34,7 @@ declare module 'vue' {
     Header: typeof import('./src/components/header/header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    'Smoothed 3 Lines Chart': typeof import('./src/components/echarts/lineChart/Smoothed 3 Lines Chart.vue')['default']
     'Smoothed Line Chart': typeof import('./src/components/echarts/lineChart/Smoothed Line Chart.vue')['default']
     Table: typeof import('./src/components/Elplus/Virtualized Table.vue')['default']
     'Virtualized Table': typeof import('./src/components/Elplus/Virtualized Table.vue')['default']

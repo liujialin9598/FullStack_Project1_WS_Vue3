@@ -31,11 +31,10 @@ const keysToKeep: string[] = sheet.columns; // 例如保留 name 和 age 键
 
 // 筛选数组中的对象，只保留指定键的键值对
 let filteredArray: { [key: string]: any }[];
-
 if (keysToKeep.length === 0) {
   filteredArray = sheet.data;
 } else {
-  filteredArray = sheet.data.map((obj) => {
+  filteredArray = sheet.data.map((obj: { [x: string]: number }) => {
     const newObj: { [key: string]: any } = {};
     keysToKeep.forEach((key) => {
       if (obj.hasOwnProperty(key)) {
@@ -125,6 +124,7 @@ const onSort = ({ key, order }: SortBy) => {
     }
   });
 };
+
 //排序结束
 </script>
 

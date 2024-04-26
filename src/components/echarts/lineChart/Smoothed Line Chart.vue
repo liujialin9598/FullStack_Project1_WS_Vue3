@@ -14,6 +14,7 @@ const echartsContainer = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   if (echartsContainer.value) {
+    
     // 初始化 ECharts 实例
     const myChart = echarts.init(echartsContainer.value);
 
