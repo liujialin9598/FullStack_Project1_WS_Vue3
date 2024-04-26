@@ -6,9 +6,15 @@
           <el-button type="primary" @click="onSubmit"
             >run new simulation</el-button
           >
-          <el-button type="default" @click="getDefaultValue"
+          <el-button type="success" @click="getDefaultValue"
             >get default value</el-button
           >
+
+          <el-button type="warning" @click="setDefaultValue" class="setdefault"
+            >set default value</el-button
+          >
+
+
         </el-form-item>
         <div v-for="(value, key) in data" :key="value" >
           {{ key }}
@@ -21,7 +27,10 @@
 
     <el-scrollbar class="view" :v-if="resultData">
       <CHART :data="resultData"></CHART>
+<<<<<<< HEAD
       <VirtualizedTable :data="resultData" :columns="col" class="table" v-if="!loading"/>
+=======
+>>>>>>> 9d9a677c62191d144f6e71193e2fe37d966641c4
     </el-scrollbar>
   </div>
 </template>
@@ -30,9 +39,12 @@
 import { onBeforeMount, reactive, ref } from "vue";
 import axios from "axios";
 import CHART from "./chartm1s2.vue";
+<<<<<<< HEAD
 import VirtualizedTable from "@/components/Elplus/Virtualized Table.vue";
 
 const col = ref<any[]>(["Age", "W", "Y", "W+Y"]);
+=======
+>>>>>>> 9d9a677c62191d144f6e71193e2fe37d966641c4
 
 // 定义响应式变量
 const data = ref<any>(null);
@@ -73,7 +85,6 @@ onBeforeMount(async () => {
     }
 
     //请求数据
-
     const localResultData =
       localStorage.getItem("default_value_for_m1s2_result") || "";
     if (!localResultData || localResultData.length < 5) {
@@ -98,6 +109,10 @@ onBeforeMount(async () => {
 const onSubmit = async () => {
   //请求新数据
   loading.value = true;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9d9a677c62191d144f6e71193e2fe37d966641c4
   //保存修改后的form parameter
   localStorage.removeItem("default_value_for_m1s2_result");
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
@@ -116,6 +131,10 @@ const getDefaultValue = async () => {
   const response_default = await axios.get("/api/m1s2/default/");
   Object.assign(form, response_default.data);
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
+};
+
+const setDefaultValue = async () => {
+  await axios.get("/api/m1s2/default/", { params: form });
 };
 </script>
 
@@ -137,9 +156,9 @@ const getDefaultValue = async () => {
   height: 94vh;
   width: calc(100% - 250px); /* 使用calc()函数确保总宽度不超过main元素的宽度 */
 }
-.table {
-  padding: 30px;
-  width: 700px;
+.setdefault {
+  margin-top: 10px;
+  margin-left: 135px;
 }
 .example-showcase .el-loading-mask {
   z-index: 9;

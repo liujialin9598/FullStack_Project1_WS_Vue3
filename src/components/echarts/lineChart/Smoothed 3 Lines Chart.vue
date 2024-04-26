@@ -9,49 +9,32 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
-const props = defineProps(["ydata", "xdata", "xname", "yname", "title"]);
+const props = defineProps([
+  "xdata",
+  "ydata",
+  "xname",
+  "yname",
+  "y1name",
+  "y2name",
+  "y1data",
+  "y2data",
+]);
 const echartsContainer = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   if (echartsContainer.value) {
     // 初始化 ECharts 实例
     const myChart = echarts.init(echartsContainer.value);
-    console.log("pro", props.xdata);
 
     // 设置图表配置项和数据
     const option = {
-      dataset: [
-        {
-          source: props.xdata.map((element: number, index: number) => [
-            element,
-            props.ydata[index],
-          ]),
-        },
-      ],
       title: {
-        text: props.title,
-        left: "center",
+        text: props.yname,
       },
       tooltip: {
         trigger: "axis",
         axisPointer: {
-          type: "cross",
-        },
-        formatter: function (params: never[]) {
-          let data = params; // 如果 params.value 为 undefined，则将 data 设为一个空数组
-          console.log(data);
-          let max = Math.max(
-            ...data.map((item: { [x: string]: any[] }) =>
-              item["value"][1].toFixed(2)
-            )
-          );
-          let min = Math.min(
-            ...data.map((item: { [x: string]: any[] }) =>
-              item["value"][1].toFixed(2)
-            )
-          );
-
-          return "max: " + max + "<br/>min: " + min;
+          animation: false,
         },
         valueFormatter: (value: number) => {
           if (value > 10) {
@@ -64,22 +47,13 @@ onMounted(() => {
         },
       },
       xAxis: {
+        type: "category",
+        data: props.xdata,
         name: props.xname,
         nameGap: 5,
-        splitLine: {
-          lineStyle: {
-            type: "dashed",
-          },
-        },
-        min: "dataMin", // 设置最小值为数据中的最小值
       },
       yAxis: {
-        name: props.yname,
-        splitLine: {
-          lineStyle: {
-            type: "dashed",
-          },
-        },
+        type: "value",
         axisLabel: {
           formatter: function (value: number) {
             if (value >= 100000) {
@@ -93,11 +67,31 @@ onMounted(() => {
           margin: 2, // 调整纵轴标签与轴线之间的距离
         },
       },
+      legend: {
+        data: [props.yname, props.y1name, props.y2name],
+        selected: {
+          [props.y1name]: false,
+          [props.y2name]: false,
+        },
+      },
       series: [
         {
-          name: "result",
-          type: "scatter",
-          datasetIndex: 0,
+          data: props.ydata,
+          name: props.yname,
+          type: "line",
+          smooth: true,
+        },
+        {
+          data: props.y1data,
+          name: props.y1name,
+          type: "line",
+          smooth: true,
+        },
+        {
+          data: props.y2data,
+          name: props.y2name,
+          type: "line",
+          smooth: true,
         },
       ],
     };

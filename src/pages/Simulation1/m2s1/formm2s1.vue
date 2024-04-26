@@ -6,8 +6,11 @@
           <el-button type="primary" @click="onSubmit"
             >run new simulation</el-button
           >
-          <el-button type="default" @click="getDefaultValue"
+          <el-button type="success" @click="getDefaultValue"
             >get default value</el-button
+          >
+          <el-button type="warning" @click="setDefaultValue" class="setdefault"
+            >set default value</el-button
           >
         </el-form-item>
         <div v-for="(value, key) in data" :key="value">
@@ -99,10 +102,7 @@ const onSubmit = async () => {
   const response = await axios.get("/api/m2s1/result/", {
     params: form,
   });
-  localStorage.setItem(
-    "default_value_for_m2s1_result",
-    response.data
-  );
+  localStorage.setItem("default_value_for_m2s1_result", response.data);
   resultData.value = JSON.parse(response.data);
 };
 
@@ -112,6 +112,10 @@ const getDefaultValue = async () => {
   const response_default = await axios.get("/api/m2s1/default/");
   Object.assign(form, response_default.data);
   localStorage.setItem("default_value_for_m2s1", JSON.stringify(form));
+};
+
+const setDefaultValue = async () => {
+  await axios.get("/api/m1s2/default/", { params: form });
 };
 </script>
 
@@ -132,5 +136,10 @@ const getDefaultValue = async () => {
   flex: 1;
   height: 94vh;
   width: calc(100% - 250px); /* 使用calc()函数确保总宽度不超过main元素的宽度 */
+}
+
+.setdefault {
+  margin-top: 10px;
+  margin-left: 135px;
 }
 </style>
