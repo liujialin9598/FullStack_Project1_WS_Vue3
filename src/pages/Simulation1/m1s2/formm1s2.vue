@@ -27,10 +27,7 @@
 
     <el-scrollbar class="view" :v-if="resultData">
       <CHART :data="resultData"></CHART>
-<<<<<<< HEAD
       <VirtualizedTable :data="resultData" :columns="col" class="table" v-if="!loading"/>
-=======
->>>>>>> 9d9a677c62191d144f6e71193e2fe37d966641c4
     </el-scrollbar>
   </div>
 </template>
@@ -39,12 +36,9 @@
 import { onBeforeMount, reactive, ref } from "vue";
 import axios from "axios";
 import CHART from "./chartm1s2.vue";
-<<<<<<< HEAD
 import VirtualizedTable from "@/components/Elplus/Virtualized Table.vue";
 
 const col = ref<any[]>(["Age", "W", "Y", "W+Y"]);
-=======
->>>>>>> 9d9a677c62191d144f6e71193e2fe37d966641c4
 
 // 定义响应式变量
 const data = ref<any>(null);
@@ -109,10 +103,6 @@ onBeforeMount(async () => {
 const onSubmit = async () => {
   //请求新数据
   loading.value = true;
-<<<<<<< HEAD
-=======
-
->>>>>>> 9d9a677c62191d144f6e71193e2fe37d966641c4
   //保存修改后的form parameter
   localStorage.removeItem("default_value_for_m1s2_result");
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
