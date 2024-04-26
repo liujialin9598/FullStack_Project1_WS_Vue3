@@ -35,4 +35,7 @@ declare module 'vue' {
     Table: typeof import('./src/components/Elplus/Virtualized Table.vue')['default']
     'Virtualized Table': typeof import('./src/components/Elplus/Virtualized Table.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }

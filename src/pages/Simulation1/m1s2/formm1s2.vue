@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading="loading">
     <el-scrollbar class="form">
       <el-form :model="form" label-width="auto">
         <el-form-item>
@@ -97,6 +97,8 @@ onBeforeMount(async () => {
 
 const onSubmit = async () => {
   //请求新数据
+  loading.value = true;
+
   //保存修改后的form parameter
   localStorage.removeItem("default_value_for_m1s2_result");
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
@@ -106,6 +108,8 @@ const onSubmit = async () => {
   });
   localStorage.setItem("default_value_for_m1s2_result", response.data);
   resultData.value = JSON.parse(response.data);
+  loading.value = false;
+
 };
 
 const getDefaultValue = async () => {
