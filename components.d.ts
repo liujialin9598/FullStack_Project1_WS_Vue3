@@ -28,6 +28,8 @@ declare module 'vue' {
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTableV2: typeof import('element-plus/es')['ElTableV2']
     Header: typeof import('./src/components/header/header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
@@ -35,5 +37,8 @@ declare module 'vue' {
     'Smoothed Line Chart': typeof import('./src/components/echarts/lineChart/Smoothed Line Chart.vue')['default']
     Table: typeof import('./src/components/Elplus/Virtualized Table.vue')['default']
     'Virtualized Table': typeof import('./src/components/Elplus/Virtualized Table.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

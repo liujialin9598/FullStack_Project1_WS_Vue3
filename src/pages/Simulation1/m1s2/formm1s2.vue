@@ -1,7 +1,7 @@
 <template>
-  <div class="main">
+  <div class="main" v-loading="loading">
     <el-scrollbar class="form">
-      <el-form :model="form" label-width="auto">
+      <el-form :model="form" label-width="auto" >
         <el-form-item>
           <el-button type="primary" @click="onSubmit"
             >run new simulation</el-button
@@ -10,7 +10,7 @@
             >get default value</el-button
           >
         </el-form-item>
-        <div v-for="(value, key) in data" :key="value">
+        <div v-for="(value, key) in data" :key="value" >
           {{ key }}
           <el-form-item :label="value">
             <el-input v-model="form[value]" />
@@ -21,7 +21,7 @@
 
     <el-scrollbar class="view" :v-if="resultData">
       <CHART :data="resultData"></CHART>
-      <VirtualizedTable :data="resultData" :columns="col" class="table" />
+      <VirtualizedTable :data="resultData" :columns="col" class="table" v-if="!loading"/>
     </el-scrollbar>
   </div>
 </template>
@@ -32,12 +32,11 @@ import axios from "axios";
 import CHART from "./chartm1s2.vue";
 import VirtualizedTable from "@/components/Elplus/Virtualized Table.vue";
 
-const col=ref<any[]>(["Age","W","Y","W+Y"]);
-
+const col = ref<any[]>(["Age", "W", "Y", "W+Y"]);
 
 // 定义响应式变量
 const data = ref<any>(null);
-const loading = ref<boolean>(true);
+const loading = ref<boolean>(false);
 const error = ref<string | null>(null);
 const resultData = ref<any[]>([]);
 
@@ -98,6 +97,7 @@ onBeforeMount(async () => {
 
 const onSubmit = async () => {
   //请求新数据
+  loading.value = true;
   //保存修改后的form parameter
   localStorage.removeItem("default_value_for_m1s2_result");
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
@@ -107,6 +107,7 @@ const onSubmit = async () => {
   });
   localStorage.setItem("default_value_for_m1s2_result", response.data);
   resultData.value = JSON.parse(response.data);
+  loading.value = false;
 };
 
 const getDefaultValue = async () => {
@@ -139,5 +140,8 @@ const getDefaultValue = async () => {
 .table {
   padding: 30px;
   width: 700px;
+}
+.example-showcase .el-loading-mask {
+  z-index: 9;
 }
 </style>

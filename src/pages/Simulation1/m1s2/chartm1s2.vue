@@ -5,6 +5,7 @@
         :xdata="getUniqueSortedValues(data, item[0], item[1])"
         :ydata="getCountListForValues(data, item[0], item[1])"
         :xname="item[0]"
+        :title="item[0]+' distribution'"
       ></BasicBar>
     </div>
   </div>

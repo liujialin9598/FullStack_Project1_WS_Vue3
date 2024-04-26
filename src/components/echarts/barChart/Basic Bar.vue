@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
-const props = defineProps(["xdata", "ydata", "xname", "yname"]);
+const props = defineProps(["xdata", "ydata", "xname", "yname","title"]);
 const echartsContainer = ref<HTMLElement | null>(null);
 
 onMounted(() => {
@@ -20,7 +20,7 @@ onMounted(() => {
     // 设置图表配置项和数据
     const option = {
       title: {
-        text: props.yname,
+        text: props.title,
       },
       tooltip: {
         trigger: "axis",
