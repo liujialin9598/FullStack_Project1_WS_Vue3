@@ -13,7 +13,6 @@ declare module 'vue' {
     'Basic Scatter Chart': typeof import('./src/components/echarts/ScatterChart/Basic Scatter Chart.vue')['default']
     Chart: typeof import('./src/components/echarts/lineChart/Smoothed Line Chart.vue')['default']
     Container: typeof import('./src/components/backup/container.vue')['default']
-    copy: typeof import('./src/components/Elplus/Virtualized Table copy.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAutoResizer: typeof import('element-plus/es')['ElAutoResizer']
     ElButton: typeof import('element-plus/es')['ElButton']

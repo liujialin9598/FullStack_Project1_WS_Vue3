@@ -23,8 +23,8 @@ import type { SortBy, SortState } from "element-plus";
 import { ref } from "vue";
 
 const sheet = defineProps(["data", "columns"]);
-console.log(sheet.data[0], "sheet");
-console.log(sheet.columns, "sheet");
+// console.log(sheet.data[0], "sheet");
+// console.log(sheet.columns, "sheet");
 
 // 要保留的键
 const keysToKeep: string[] = sheet.columns; // 例如保留 name 和 age 键
@@ -39,7 +39,16 @@ if (keysToKeep.length === 0) {
     const newObj: { [key: string]: any } = {};
     keysToKeep.forEach((key) => {
       if (obj.hasOwnProperty(key)) {
-        newObj[key] = obj[key];
+        switch (key) {
+          case "Age":
+            // 不做处理
+            newObj[key] = obj[key];
+            break;
+          default:
+            // 保留两位小数
+            newObj[key] = obj[key].toFixed(2);
+            break;
+        }
       }
     });
     return newObj;

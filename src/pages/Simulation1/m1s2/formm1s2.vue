@@ -74,7 +74,6 @@ onBeforeMount(async () => {
     }
 
     //请求数据
-
     const localResultData =
       localStorage.getItem("default_value_for_m1s2_result") || "";
     if (!localResultData || localResultData.length < 5) {
