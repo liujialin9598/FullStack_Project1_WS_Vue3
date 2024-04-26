@@ -17,7 +17,7 @@
       </el-menu-item-group>
       <el-menu-item-group title="Model Two">
         <el-menu-item index="/m2s1">Single simulation</el-menu-item>
-        <el-menu-item>Multiple simulation</el-menu-item>
+        <el-menu-item index="/m2s2">Multiple simulation</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
   </el-menu>

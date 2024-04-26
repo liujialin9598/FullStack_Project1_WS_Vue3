@@ -13,6 +13,8 @@
           <el-button type="warning" @click="setDefaultValue" class="setdefault"
             >set default value</el-button
           >
+
+
         </el-form-item>
         <div v-for="(value, key) in data" :key="value">
           {{ key }}

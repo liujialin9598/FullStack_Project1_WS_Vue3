@@ -128,15 +128,15 @@ onMounted(() => {
       legend: {
         selected: { detail: false },
       },
-      dataZoom: [
-        {
-          type: "inside",
-        },
-        {
-          type: "slider",
-          height: 20,
-        },
-      ],
+      //   dataZoom: [
+      //     {
+      //       type: "inside",
+      //     },
+      //     {
+      //       type: "slider",
+      //       height: 20,
+      //     },
+      //   ],
       series: [
         {
           name: "boxplot",
@@ -146,7 +146,7 @@ onMounted(() => {
             color: "#b8c5f2",
           },
           encode: {
-            y: ["min", "Q1", "median",  "Q3", "max"],
+            y: ["min", "Q1", "median", "Q3", "max"],
             x: "Country",
             itemName: ["Country"],
             tooltip: ["max", "Q3", "median", "mean", "Q1", "min"],
