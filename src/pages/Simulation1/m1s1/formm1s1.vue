@@ -9,7 +9,7 @@
           <el-button type="success" @click="getDefaultValue"
             >get default value</el-button
           >
-          
+
           <el-button type="warning" @click="setDefaultValue" class="setdefault"
             >set default value</el-button
           >
@@ -17,7 +17,13 @@
         <div v-for="(value, key) in data" :key="value">
           {{ key }}
           <el-form-item :label="value">
-            <el-input v-model="form[value]" />
+            <el-input v-model="form[value]" v-if="value === 'Z_group'" />
+            <el-input
+              v-else
+              v-model="form[value]"
+              :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+              :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+            />
           </el-form-item>
         </div>
       </el-form>
@@ -111,11 +117,9 @@ const getDefaultValue = async () => {
   localStorage.setItem("default_value_for_m1s1", JSON.stringify(form));
 };
 
-
 const setDefaultValue = async () => {
   await axios.get("/api/m1s2/default/", { params: form });
 };
-
 </script>
 
 <style scoped>

@@ -29,6 +29,10 @@
 import SmoothedLineChart from "@/components/echarts/lineChart/Smoothed Line Chart.vue";
 import Smoothed3LinesChart from "@/components/echarts/lineChart/Smoothed 3 Lines Chart.vue";
 const items = [
+  "inf",
+  "Z1",
+  "sum_weighted_Z*σ",
+  "weighted_Z*σ",
   "W",
   "w",
   "I(t)",
@@ -37,7 +41,6 @@ const items = [
   "Loss(t)",
   "PR(t)",
   "B/P",
-  "inf",
   "r(t)",
   "Z2",
   "P",
