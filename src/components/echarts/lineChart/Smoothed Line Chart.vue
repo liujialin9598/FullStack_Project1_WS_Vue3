@@ -9,12 +9,18 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from "vue";
 import * as echarts from "echarts";
-const props = defineProps(["xdata", "ydata", "xname", "yname"]);
+const props = defineProps([
+  "xdata",
+  "ydata",
+  "xname",
+  "yname",
+  "xAxisMinMax",
+  "yAxisMinMax",
+]);
 const echartsContainer = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   if (echartsContainer.value) {
-    
     // 初始化 ECharts 实例
     const myChart = echarts.init(echartsContainer.value);
 
@@ -43,6 +49,8 @@ onMounted(() => {
         data: props.xdata,
         name: props.xname,
         nameGap: 5,
+        min: props.xAxisMinMax ? props.xAxisMinMax[0] : null, // 设置坐标轴的最小值
+        max: props.xAxisMinMax ? props.xAxisMinMax[1] : null, // 设置坐标轴的最大值
       },
       yAxis: {
         type: "value",
@@ -58,6 +66,8 @@ onMounted(() => {
           },
           margin: 2, // 调整纵轴标签与轴线之间的距离
         },
+        min: props.yAxisMinMax ? props.yAxisMinMax[0] : null, // 设置坐标轴的最小值
+        max: props.yAxisMinMax ? props.yAxisMinMax[1] : null, // 设置坐标轴的最小值
       },
       series: [
         {
@@ -70,7 +80,6 @@ onMounted(() => {
 
     // 使用配置项和数据绘制图表
     myChart.setOption(option);
-
 
     // 监听数据变化
     watch(props, () => {
@@ -88,7 +97,6 @@ onMounted(() => {
       });
     });
   }
-
 });
 </script>
 
