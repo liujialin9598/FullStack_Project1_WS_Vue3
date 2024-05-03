@@ -17,7 +17,7 @@
         <div v-for="(value, key) in data" :key="value">
           {{ key }}
           <el-form-item :label="value">
-            <el-input v-model="form[value]" v-if="value === 'Z_group'" />
+            <el-input v-model="form[value]" v-if="value.includes('_group') " />
             <el-input
               v-else
               v-model="form[value]"
