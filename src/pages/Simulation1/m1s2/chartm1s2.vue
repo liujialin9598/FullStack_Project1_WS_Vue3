@@ -120,7 +120,7 @@ function groupData(data: number[], groupSize: number): string[] {
 .table {
   padding: 10px;
   width: 700px;
-}gi
+}
 
 .DataTransformSimpleAggregate{
   padding: 10px;
