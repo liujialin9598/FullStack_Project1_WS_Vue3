@@ -27,7 +27,6 @@
 
     <el-scrollbar class="view" :v-if="resultData">
       <CHART :data="resultData"></CHART>
-      <VirtualizedTable :data="resultData" :columns="col" class="table" v-if="!loading"/>
     </el-scrollbar>
   </div>
 </template>
