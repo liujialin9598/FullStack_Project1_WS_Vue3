@@ -11,6 +11,7 @@
           :y2data="data.map((i:any) => i['AT_max'])"
           :y2name="'AT_max'"
           :xname="'Age'"
+          :yAxisMinMax="item[1]"
         ></Smoothed3LinesChart>
       </div>
       <div v-else>
@@ -32,12 +33,12 @@ import Smoothed3LinesChart from "@/components/echarts/lineChart/Smoothed 3 Lines
 const items = [
   ["Inf(t)", [-0.2, 0.2]],
   ["Z1",[-4,4]],
-  ["W"],
-  ["w"],
-  ["I(t)"],
-  ["I(t)/P"],
-  ["B(t)"],
-  ["Loss(t)"],
+  ["W",[0,500]],
+  ["w",[0,5]],
+  ["I(t)",[0,200000]],
+  ["I(t)/P",[0,10]],
+  ["B(t)",[0,800000]],
+  ["Loss(t)",[0,40000]],
   ["PR(t)"],
   ["B/P"],
   ["r(t)"],

@@ -18,6 +18,7 @@ const props = defineProps([
   "y2name",
   "y1data",
   "y2data",
+  "yAxisMinMax",
 ]);
 const echartsContainer = ref<HTMLElement | null>(null);
 
@@ -54,6 +55,8 @@ onMounted(() => {
       },
       yAxis: {
         type: "value",
+        min: props.yAxisMinMax ? props.yAxisMinMax[0] : null, // 设置坐标轴的最小值
+        max: props.yAxisMinMax ? props.yAxisMinMax[1] : null, // 设置坐标轴的最小值
         axisLabel: {
           formatter: function (value: number) {
             if (value >= 100000) {
