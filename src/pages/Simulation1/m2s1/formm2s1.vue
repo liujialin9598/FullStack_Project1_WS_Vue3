@@ -2,6 +2,7 @@
   <div class="main">
     <el-scrollbar class="form">
       <el-form :model="form" label-width="auto">
+        <!-- 执行请求 -->
         <el-form-item>
           <el-button type="primary" @click="onSubmit"
             >run new simulation</el-button
@@ -9,19 +10,31 @@
           <el-button type="success" @click="getDefaultValue"
             >get default value</el-button
           >
+
           <el-button type="warning" @click="setDefaultValue" class="setdefault"
             >set default value</el-button
           >
         </el-form-item>
+
+        <!-- 列表按钮 -->
         <div v-for="(value, key) in data" :key="value">
           {{ key }}
           <el-form-item :label="value">
-            <el-input v-model="form[value]" />
+            <el-input v-model="form[value]" v-if="value.includes('_group') " />
+            <el-input
+              v-else
+              v-model="form[value]"
+              :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+              :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+            />
           </el-form-item>
         </div>
+
+
       </el-form>
     </el-scrollbar>
 
+    <!-- 作图区 -->
     <el-scrollbar class="view" :v-if="resultData">
       <CHART :data="resultData"></CHART>
     </el-scrollbar>
@@ -47,8 +60,11 @@ onBeforeMount(async () => {
   try {
     loading.value = true;
     // 请求表格结构
+    // 获取本地数据
     const localapiData =
       localStorage.getItem("default_value_for_api_m2s1") || "";
+
+    // 如果没有本地数据, 那么请求远程数据
     if (!localapiData || localapiData.length < 5) {
       const response = await axios.get("/api/m2s1/");
       localStorage.setItem(
@@ -72,18 +88,14 @@ onBeforeMount(async () => {
     }
 
     //请求数据
-
     const localResultData =
       localStorage.getItem("default_value_for_m2s1_result") || "";
     if (!localResultData || localResultData.length < 5) {
-      const response_result = await axios.get("/api/m2s1/result/", {
+      const response = await axios.get("/api/m2s1/result/", {
         params: form,
       });
-      resultData.value = JSON.parse(response_result.data);
-      localStorage.setItem(
-        "default_value_for_m2s1_result",
-        JSON.stringify(resultData.value)
-      );
+      localStorage.setItem("default_value_for_m2s1_result", response.data);
+      resultData.value = JSON.parse(response.data);
     } else {
       resultData.value = JSON.parse(localResultData);
     }

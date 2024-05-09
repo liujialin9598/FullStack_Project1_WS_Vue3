@@ -2,7 +2,6 @@
   <div class="main">
     <el-scrollbar class="form">
       <el-form :model="form" label-width="auto">
-        <!-- 执行请求 -->
         <el-form-item>
           <el-button type="primary" @click="onSubmit"
             >run new simulation</el-button
@@ -10,31 +9,19 @@
           <el-button type="success" @click="getDefaultValue"
             >get default value</el-button
           >
-
           <el-button type="warning" @click="setDefaultValue" class="setdefault"
             >set default value</el-button
           >
         </el-form-item>
-
-        <!-- 列表按钮 -->
         <div v-for="(value, key) in data" :key="value">
           {{ key }}
           <el-form-item :label="value">
-            <el-input v-model="form[value]" v-if="value.includes('_group') " />
-            <el-input
-              v-else
-              v-model="form[value]"
-              :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
-              :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
-            />
+            <el-input v-model="form[value]" />
           </el-form-item>
         </div>
-
-
       </el-form>
     </el-scrollbar>
 
-    <!-- 作图区 -->
     <el-scrollbar class="view" :v-if="resultData">
       <CHART :data="resultData"></CHART>
     </el-scrollbar>
@@ -44,7 +31,7 @@
 <script lang="ts" setup>
 import { onBeforeMount, reactive, ref } from "vue";
 import axios from "axios";
-import CHART from "./chartm1s1.vue";
+import CHART from "./chartm2s1.vue";
 
 // 定义响应式变量
 const data = ref<any>(null);
@@ -60,15 +47,12 @@ onBeforeMount(async () => {
   try {
     loading.value = true;
     // 请求表格结构
-    // 获取本地数据
     const localapiData =
-      localStorage.getItem("default_value_for_api_m1s1") || "";
-
-    // 如果没有本地数据, 那么请求远程数据
+      localStorage.getItem("default_value_for_api_m2s1") || "";
     if (!localapiData || localapiData.length < 5) {
-      const response = await axios.get("/api/m1s1/");
+      const response = await axios.get("/api/m2s1/");
       localStorage.setItem(
-        "default_value_for_api_m1s1",
+        "default_value_for_api_m2s1",
         JSON.stringify(response.data)
       );
       data.value = response.data;
@@ -77,25 +61,29 @@ onBeforeMount(async () => {
     }
 
     // 请求表格default数据
-    const localData = localStorage.getItem("default_value_for_m1s1") || "";
+    const localData = localStorage.getItem("default_value_for_m2s1") || "";
     if (!localData || localData.length < 5) {
-      const response_default = await axios.get("/api/m1s1/default/");
+      const response_default = await axios.get("/api/m2s1/default/");
       Object.assign(form, response_default.data);
-      localStorage.setItem("default_value_for_m1s1", JSON.stringify(form));
+      localStorage.setItem("default_value_for_m2s1", JSON.stringify(form));
     } else {
       const response_default = JSON.parse(localData);
       Object.assign(form, response_default);
     }
 
     //请求数据
+
     const localResultData =
-      localStorage.getItem("default_value_for_m1s1_result") || "";
+      localStorage.getItem("default_value_for_m2s1_result") || "";
     if (!localResultData || localResultData.length < 5) {
-      const response = await axios.get("/api/m1s1/result/", {
+      const response_result = await axios.get("/api/m2s1/result/", {
         params: form,
       });
-      localStorage.setItem("default_value_for_m1s1_result", response.data);
-      resultData.value = JSON.parse(response.data);
+      resultData.value = JSON.parse(response_result.data);
+      localStorage.setItem(
+        "default_value_for_m2s1_result",
+        JSON.stringify(resultData.value)
+      );
     } else {
       resultData.value = JSON.parse(localResultData);
     }
@@ -109,21 +97,21 @@ onBeforeMount(async () => {
 const onSubmit = async () => {
   //请求新数据
   //保存修改后的form parameter
-  localStorage.setItem("default_value_for_m1s1", JSON.stringify(form));
+  localStorage.setItem("default_value_for_m2s1", JSON.stringify(form));
   //更新表格数据
-  const response = await axios.get("/api/m1s1/result/", {
+  const response = await axios.get("/api/m2s1/result/", {
     params: form,
   });
-  localStorage.setItem("default_value_for_m1s1_result", response.data);
+  localStorage.setItem("default_value_for_m2s1_result", response.data);
   resultData.value = JSON.parse(response.data);
 };
 
 const getDefaultValue = async () => {
-  localStorage.removeItem("default_value_for_m1s1");
-  localStorage.removeItem("default_value_for_api_m1s1");
-  const response_default = await axios.get("/api/m1s1/default/");
+  localStorage.removeItem("default_value_for_m2s1");
+  localStorage.removeItem("default_value_for_api_m2s1");
+  const response_default = await axios.get("/api/m2s1/default/");
   Object.assign(form, response_default.data);
-  localStorage.setItem("default_value_for_m1s1", JSON.stringify(form));
+  localStorage.setItem("default_value_for_m2s1", JSON.stringify(form));
 };
 
 const setDefaultValue = async () => {

@@ -1,25 +1,23 @@
 <template>
   <div class="charts">
     <div v-for="(item, index) in items" :key="index" class="chart">
-      <div v-if="item[0] == 'B(t)'">
+      <div v-if="item == 'B'">
         <Smoothed3LinesChart
           :xdata="data.map((i:any) => i.Age)"
-          :ydata="data.map((i:any) => i[item[0]])"
-          :yname="item[0]"
+          :ydata="data.map((i:any) => i[item])"
+          :yname="item"
           :y1data="data.map((i:any) => i['AT_min'])"
           :y1name="'AT_min'"
           :y2data="data.map((i:any) => i['AT_max'])"
           :y2name="'AT_max'"
           :xname="'Age'"
-          :yAxisMinMax="item[1]"
         ></Smoothed3LinesChart>
       </div>
       <div v-else>
         <SmoothedLineChart
           :xdata="data.map((i:any) => i.Age)"
-          :ydata="data.map((i:any) => i[item[0]])"
-          :yname="item[0]"
-          :yAxisMinMax="item[1]"
+          :ydata="data.map((i:any) => i[item])"
+          :yname="item"
           :xname="'Age'"
         ></SmoothedLineChart>
       </div>
@@ -30,22 +28,21 @@
 <script lang="ts" setup>
 import SmoothedLineChart from "@/components/echarts/lineChart/Smoothed Line Chart.vue";
 import Smoothed3LinesChart from "@/components/echarts/lineChart/Smoothed 3 Lines Chart.vue";
+
 const items = [
-  ["Inf(t)", [-0.2, 0.2]],
-  ["Z1",[-4,4]],
-  ["W",[0,500]],
-  ["w",[0,5]],
-  ["I(t)",[0,200000]],
-  ["I(t)/P",[0,10]],
-  ["B(t)",[0,800000]],
-  ["Loss(t)",[0,40000]],
-  ["PR(t)"],
-  ["B/P"],
-  ["r(t)"],
-  ["Z2"],
-  ["P(t)"],
-  ["Pen(t)"],
-  ["Y"],
+  "W",
+  "w",
+  "I(t)",
+  "I(t)/P",
+  "B",
+  "Loss(t)",
+  "PR(t)",
+  "B/P",
+  "inf",
+  "r(t)",
+  "P",
+  "Pen",
+  "Y",
 ];
 
 defineProps(["data"]);
