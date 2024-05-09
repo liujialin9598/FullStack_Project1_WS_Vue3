@@ -113,6 +113,21 @@ onMounted(() => {
         series: [
           {
             data: props.ydata,
+            name: props.yname,
+            type: "line",
+            smooth: true,
+          },
+          {
+            data: props.y1data,
+            name: props.y1name,
+            type: "line",
+            smooth: true,
+          },
+          {
+            data: props.y2data,
+            name: props.y2name,
+            type: "line",
+            smooth: true,
           },
         ],
       });
