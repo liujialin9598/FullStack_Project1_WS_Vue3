@@ -20,15 +20,22 @@
       <el-menu-item index="/Sone">Simulation One</el-menu-item>
       <el-menu-item index="/Stwo">Simulation Two</el-menu-item>
     </el-sub-menu>
+    <el-menu-item @click="logout">Log Out</el-menu-item>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 const activeIndex = ref("1");
 const handleSelect = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
+};
+const router = useRouter();
+const logout = () => {
+  localStorage.clear();
+  router.push("/login");
 };
 </script>
 
