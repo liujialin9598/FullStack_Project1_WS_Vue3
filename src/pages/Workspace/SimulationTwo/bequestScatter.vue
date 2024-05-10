@@ -23,7 +23,7 @@ const echartsContainer = ref<HTMLElement | null>(null);
 let dataArray = ref<any>([]);
 
 onMounted(() => {
-  for (let i = 0; i <= 50; i += 0.1) {
+  for (let i = -0.1; i <= 50; i += 0.1) {
     dataArray.value.push([
       i.toFixed(4),
       (i ** (1 - props.ρ) / (1 - props.ρ) * props.K1).toFixed(4),
@@ -140,7 +140,7 @@ onMounted(() => {
       (newXdata, oldXdata) => {
         if (JSON.stringify(newXdata) !== JSON.stringify(oldXdata)) {
           let dataArray = ref<any>([]);
-          for (let i = 0; i <= 50; i += 0.1) {
+          for (let i = -0.1; i <= 50; i += 0.1) {
             dataArray.value.push([
               i.toFixed(2),
               (i ** (1 - props.ρ) / (1 - props.ρ) * props.K1).toFixed(2),
