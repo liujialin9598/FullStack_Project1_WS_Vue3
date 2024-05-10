@@ -189,7 +189,7 @@ onMounted(() => {
 
     // 监听数据变化
     watch(
-      () => props.xdata,
+      () => props.ydata,
       (newXdata, oldXdata) => {
         if (JSON.stringify(newXdata) !== JSON.stringify(oldXdata)) {
           // 当数据变化时重新渲染图表

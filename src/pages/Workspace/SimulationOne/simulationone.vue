@@ -51,7 +51,11 @@
         <p>You can modify the parameters here.</p>
         <br />
         <p>Simulation times</p>
-        <el-input v-model="apiData.simulationtimes.value" />
+        <el-input
+          v-model="apiData.simulationtimes.value"
+          :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+          :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+        />
 
         <el-button class="button" @click="onSubmitMulti"
           >Perform simulation</el-button
@@ -218,27 +222,52 @@
           ></Formular>
         </div>
       </div>
-      <div class="charts">
-        <BasicBar
-          :xdata="oneResultData.map((i:any) => i.Age)"
-          :ydata="oneResultData.map((i:any) => i['Y'])"
-          title="Bequest wellbeing"
-          xname="Age"
-        ></BasicBar>
-      </div>
-      <div class="parameters">
-        <p>γ</p>
-        <el-input v-model="apiData.γ.value" />
-        <br />
-        <p>K<sub>2</sub></p>
-        <el-input v-model="apiData.K2.value" />
-
-        <el-button
-          class="button"
-          @click="onSubmitOne"
-          style="margin-bottom: 50px; margin-left: 20px"
-          >Perform simulation</el-button
+      <!-- 图表区 -->
+      <div style="display: flex; flex-direction: column; width: 700px">
+        <div style="display: flex">
+          <div class="charts" style="width: 350px">
+            <BasicBar
+              :xdata="oneResultData.map((i:any) => i.Age)"
+              :ydata="oneResultData.map((i:any) => i['Y'])"
+              title="Bequest wellbeing"
+              xname="Age"
+            ></BasicBar>
+          </div>
+          <div class="charts" style="width: 350px">
+            <bequestScatter
+              :xdata="oneResultData.map((i:any) => i['B/P'])"
+              :ydata="oneResultData.map((i:any) => i['Y'])"
+              title="Bequest"
+              xname="B(t)/P"
+              :ρ="apiData.γ.value"
+              :K1="apiData.K2.value"
+            ></bequestScatter>
+          </div>
+        </div>
+        <!-- 参数区 -->
+        <div
+          class="parameters2"
+          style="
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: end;
+          "
         >
+          <div>
+            <p>γ</p>
+            <el-input v-model="apiData.γ.value" style="width: 150px" />
+          </div>
+          <div>
+            <p>K<sub>2</sub></p>
+            <el-input v-model="apiData.K2.value" style="width: 150px" />
+          </div>
+          <div>
+            <el-button class="button" @click="onSubmitOne"
+              >Perform simulation</el-button
+            >
+          </div>
+        </div>
       </div>
     </div>
     <br /><br />
@@ -281,7 +310,11 @@
       </div>
       <div class="parameters">
         <p>B<sub>0</sub></p>
-        <el-input v-model="apiData.Bt.value" />
+        <el-input
+          v-model="apiData.Bt.value"
+          :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+          :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+        />
         <br />
 
         <el-button
@@ -337,13 +370,25 @@
         </div>
         <div class="parameters">
           <p>B<sub>0</sub></p>
-          <el-input v-model="apiData.Bt.value" />
+          <el-input
+            v-model="apiData.Bt.value"
+            :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+            :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          />
           <br />
           <p>AT<sub>min</sub></p>
-          <el-input v-model="apiData.AT_min.value" />
+          <el-input
+            v-model="apiData.AT_min.value"
+            :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+            :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          />
           <br />
           <p>AT<sub>max</sub></p>
-          <el-input v-model="apiData.AT_max.value" />
+          <el-input
+            v-model="apiData.AT_max.value"
+            :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+            :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          />
           <br />
           <p>RWG</p>
           <el-input v-model="apiData.RWG.value" />
@@ -540,7 +585,11 @@
       </div>
       <div class="parameters">
         <p>P</p>
-        <el-input v-model="apiData.Pt.value" />
+        <el-input
+          v-model="apiData.Pt.value"
+          :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
+          :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+        />
         <br />
 
         <el-button
@@ -643,6 +692,7 @@ import SmoothedLineChart from "@/components/echarts/lineChart/Smoothed Line Char
 import Smoothed3LinesChart from "@/components/echarts/lineChart/Smoothed 3 Lines Chart.vue";
 import Formular from "@/components/echarts/formular/formular.vue";
 import wellbeingScatter from "./wellbeingScatter.vue";
+import bequestScatter from "./bequestScatter.vue";
 
 // #region 定义响应式变量
 const apiData = reactive<any>({});

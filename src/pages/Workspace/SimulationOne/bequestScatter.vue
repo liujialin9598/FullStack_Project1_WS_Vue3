@@ -7,31 +7,49 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, watchEffect } from "vue";
 import * as echarts from "echarts";
 const props = defineProps([
-  "xdata",
   "ydata",
+  "xdata",
   "xname",
   "yname",
-  "y1name",
-  "y2name",
-  "y1data",
   "title",
-  "y2data",
-  "yAxisMinMax",
+  "ρ",
+  "K1",
 ]);
 const echartsContainer = ref<HTMLElement | null>(null);
 
+let dataArray = ref<any>([]);
+
 onMounted(() => {
+  for (let i = 0; i <= 50; i += 0.1) {
+    dataArray.value.push([
+      i.toFixed(4),
+      (i ** (1 - props.ρ) / (1 - props.ρ) * props.K1).toFixed(4),
+    ]);
+  }
+
   if (echartsContainer.value) {
     // 初始化 ECharts 实例
     const myChart = echarts.init(echartsContainer.value);
 
     // 设置图表配置项和数据
     const option = {
+      dataset: [
+        {
+          source: props.xdata.map((element: number, index: number) => [
+            element,
+            props.ydata[index],
+          ]),
+        },
+        {
+          source: dataArray.value,
+        },
+      ],
       title: {
         text: props.title,
+        left: "center",
         textStyle: {
           fontSize: 12, // 设置标题字体大小
           // 其他样式属性
@@ -40,8 +58,24 @@ onMounted(() => {
       tooltip: {
         trigger: "axis",
         axisPointer: {
-          animation: false,
+          type: "cross",
         },
+        // formatter: function (params: never[]) {
+        //   console.log(params);
+        //   let data = params; // 如果 params.value 为 undefined，则将 data 设为一个空数组
+        //   let max = Math.max(
+        //     ...data.map((item: { [x: string]: any[] }) =>
+        //       item["value"][1].toFixed(2)
+        //     )
+        //   );
+        //   let min = Math.min(
+        //     ...data.map((item: { [x: string]: any[] }) =>
+        //       item["value"][1].toFixed(2)
+        //     )
+        //   );
+
+        //   return "max: " + max + "<br/>min: " + min;
+        // },
         valueFormatter: (value: number) => {
           if (value > 10) {
             return parseFloat(value.toFixed(0)).toLocaleString("en-US"); // 将大于10的数字四舍五入为整数
@@ -53,15 +87,22 @@ onMounted(() => {
         },
       },
       xAxis: {
-        type: "category",
-        data: props.xdata,
         name: props.xname,
-        nameGap: 5,
+        nameGap: 0,
+        splitLine: {
+          lineStyle: {
+            type: "dashed",
+          },
+        },
+        min: "dataMin", // 设置最小值为数据中的最小值
       },
       yAxis: {
-        type: "value",
-        min: props.yAxisMinMax ? props.yAxisMinMax[0] : null, // 设置坐标轴的最小值
-        max: props.yAxisMinMax ? props.yAxisMinMax[1] : null, // 设置坐标轴的最小值
+        name: props.yname,
+        splitLine: {
+          lineStyle: {
+            type: "dashed",
+          },
+        },
         axisLabel: {
           formatter: function (value: number) {
             if (value >= 100000) {
@@ -75,32 +116,17 @@ onMounted(() => {
           margin: 2, // 调整纵轴标签与轴线之间的距离
         },
       },
-      legend: {
-        data: [props.yname, props.y1name, props.y2name],
-        selected: {
-          [props.y1name]: false,
-          [props.y2name]: false,
-        },
-        top: "10%",
-      },
       series: [
         {
-          data: props.ydata,
-          name: props.yname,
-          type: "line",
-          smooth: true,
+          name: "result",
+          type: "scatter",
+          datasetIndex: 0,
         },
         {
-          data: props.y1data,
-          name: props.y1name,
+          name: "line",
           type: "line",
-          smooth: true,
-        },
-        {
-          data: props.y2data,
-          name: props.y2name,
-          type: "line",
-          smooth: true,
+          datasetIndex: 1,
+          symbol: "none",
         },
       ],
     };
@@ -110,33 +136,27 @@ onMounted(() => {
 
     // 监听数据变化
     watch(
-      () => props.ydata,
+      () => props.xdata,
       (newXdata, oldXdata) => {
         if (JSON.stringify(newXdata) !== JSON.stringify(oldXdata)) {
+          let dataArray = ref<any>([]);
+          for (let i = 0; i <= 50; i += 0.1) {
+            dataArray.value.push([
+              i.toFixed(2),
+              (i ** (1 - props.ρ) / (1 - props.ρ) * props.K1).toFixed(2),
+            ]);
+          }
           // 当数据变化时重新渲染图表
           myChart.setOption({
-            xAxis: {
-              data: props.xdata,
-              name: props.xname,
-            },
-            series: [
+            dataset: [
               {
-                data: props.ydata,
-                name: props.yname,
-                type: "line",
-                smooth: true,
+                source: props.xdata.map((element: number, index: number) => [
+                  element,
+                  props.ydata[index],
+                ]),
               },
               {
-                data: props.y1data,
-                name: props.y1name,
-                type: "line",
-                smooth: true,
-              },
-              {
-                data: props.y2data,
-                name: props.y2name,
-                type: "line",
-                smooth: true,
+                source: dataArray.value,
               },
             ],
           });
