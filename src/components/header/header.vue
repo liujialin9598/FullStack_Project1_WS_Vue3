@@ -35,7 +35,7 @@ const handleSelect = (key: string, keyPath: string[]) => {
 const router = useRouter();
 const logout = () => {
   localStorage.clear();
-  router.push("/login");
+  router.push("Login");
 };
 </script>
 
