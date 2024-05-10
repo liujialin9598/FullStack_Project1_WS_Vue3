@@ -1,6 +1,6 @@
 <template>
-  <div class="login-container">
-    <h2 class="login-title">Welcome Back!</h2>
+  <div class="login-container" style="margin-top: 100px;">
+    <h2 class="login-title">Welcome to Windlestone Model!</h2>
     <el-form :model="form" label-width="0">
       <el-form-item>
         <el-input
