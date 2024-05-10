@@ -239,6 +239,7 @@
               :xdata="oneResultData.map((i:any) => i.Age)"
               :ydata="oneResultData.map((i:any) => i['Y'])"
               title="Bequest Well-being"
+              :yAxisMinMax="[0, 30]"
               xname="Age"
             ></BasicBar>
           </div>
