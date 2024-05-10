@@ -808,8 +808,8 @@ const onSubmitOne = async () => {
 // #region onSubmitMulti 多次模拟的结果
 const onSubmitMulti = async () => {
   loading.value = true;
-  if (apiData.simulationtimes.value > 5001) {
-    apiData.simulationtimes.value = 5000;
+  if (apiData.simulationtimes.value > 4001) {
+    apiData.simulationtimes.value = 4000;
   }
 
   const response = await axios.get("/api/sone/multisim/", {
