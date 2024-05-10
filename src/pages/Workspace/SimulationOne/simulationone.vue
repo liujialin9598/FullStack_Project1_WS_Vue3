@@ -15,8 +15,8 @@
         <BasicBar
           :xdata="getUniqueSortedValues(multiResultData, 'W+Y', 5)"
           :ydata="getCountListForValues(multiResultData, 'W+Y', 5)"
-          xname="Lifetime well-being"
-          title="Lifetime well-being distribution"
+          xname="Lifetime Well-being"
+          title="Lifetime Well-being distribution"
           right_grid="25%"
         ></BasicBar>
       </div>
@@ -32,8 +32,8 @@
     </div>
     <!-- #endregion -->
 
-    <!-- #region Lifetime well-being -->
-    <h1>Lifetime well-being</h1>
+    <!-- #region Lifetime Well-being -->
+    <h1>Lifetime Well-being</h1>
     <p>
       This is a boxplot showing the results of
       {{ localapiData["simulationtimes"]["value"] }} simulations.
@@ -43,7 +43,7 @@
         <DataTransformSimpleAggregate
           :xdata="multiResultData.map((i:any) => i['Age'])"
           :ydata="multiResultData.map((i:any) => i['W+Y'])"
-          :yname="'Lifetime well-being'"
+          :yname="'Lifetime Well-being'"
           :xname="'Age at death'"
         ></DataTransformSimpleAggregate>
       </div>
@@ -70,24 +70,24 @@
     <br /><br />
     <!-- #region Single simulation -->
 
-    <!-- #region Lifetime well-being -->
-    <h1>Lifetime well-being</h1>
+    <!-- #region Lifetime Well-being -->
+    <h1>Lifetime Well-being</h1>
     <div class="charts2">
       <div class="function">
         <div style="text-align: left">
           <img
             style="height: 50px"
             src="@/assets/formulars/Lifetime Wellbeing.png"
-            alt="Lifetime well-being"
+            alt="Lifetime Well-being"
           />
         </div>
         <br />
         <div>
           <Formular
             :formula="[
-              ['W<sub>L</sub>', 'Lifetime well-being'],
-              ['w<sub>t</sub>', 'Income well-being in year t'],
-              ['Y<sub>T</sub>', 'Bequest well-being in year T'],
+              ['W<sub>L</sub>', 'Lifetime Well-being'],
+              ['w<sub>t</sub>', 'Income Well-being in year t'],
+              ['Y<sub>T</sub>', 'Bequest Well-being in year T'],
               ['T', 'Year of death'],
             ]"
             :left_length="0.3"
@@ -98,7 +98,7 @@
         <SmoothedLineChart
           :xdata="oneResultData.map((i:any) => i.Age)"
           :ydata="oneResultData.map((i:any) => i['W'])"
-          title="Lifetime well-being"
+          title="Lifetime Well-being"
           :yAxisMinMax="[0, 120]"
           xname="Age"
         ></SmoothedLineChart>
@@ -115,24 +115,24 @@
     <br /><br />
     <!-- #endregion -->
 
-    <!-- #region well-being  -->
-    <h1>well-being functions</h1>
+    <!-- #region Well-being  -->
+    <h1>Well-being functions</h1>
     <br />
-    <p><b>well-being each year</b></p>
+    <p><b>Well-being each year</b></p>
     <div class="charts2">
       <div class="function">
         <div style="text-align: left">
           <img
             style="height: 100px"
             src="@/assets/formulars/Wellbeing functions.png"
-            alt="well-being functions"
+            alt="Well-being functions"
           />
         </div>
         <br />
         <div>
           <Formular
             :formula="[
-              ['w<sub>t</sub>', 'Income well-being in year t'],
+              ['w<sub>t</sub>', 'Income Well-being in year t'],
               ['P<sub>t</sub>', 'Price index level  at the end of year t'],
               ['I<sub>t</sub>', 'Income paid to the member during year t'],
               ['ρ', 'Risk aversion parameter 0 < ρ < 1'],
@@ -149,7 +149,7 @@
             <BasicBar
               :xdata="oneResultData.map((i:any) => i.Age)"
               :ydata="oneResultData.map((i:any) => i['w'])"
-              title="Lifetime well-being"
+              title="Lifetime Well-being"
               :yAxisMinMax="[0, 4]"
               xname="Age"
             ></BasicBar>
@@ -158,7 +158,7 @@
             <wellbeingScatter
               :xdata="oneResultData.map((i:any) => i['I(t)/P'])"
               :ydata="oneResultData.map((i:any) => i['w'])"
-              title="Lifetime well-being"
+              title="Lifetime Well-being"
               :yAxisMinMax="[0, 4]"
               xname="I(t)/P"
               :ρ="apiData.ρ.value"
@@ -229,7 +229,7 @@
             <BasicBar
               :xdata="oneResultData.map((i:any) => i.Age)"
               :ydata="oneResultData.map((i:any) => i['Y'])"
-              title="Bequest well-being"
+              title="Bequest Well-being"
               xname="Age"
             ></BasicBar>
           </div>
