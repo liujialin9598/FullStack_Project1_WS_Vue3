@@ -2,18 +2,19 @@
   <div
     class="echarts-container"
     ref="echartsContainer"
-    style="width: 350px; height: 350px"
+    style="width: 100%; height: 100%"
   ></div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, watchEffect } from "vue";
 import * as echarts from "echarts";
 const props = defineProps([
   "xdata",
   "ydata",
   "xname",
   "yname",
+  "title",
   "xAxisMinMax",
   "yAxisMinMax",
 ]);
@@ -27,7 +28,14 @@ onMounted(() => {
     // 设置图表配置项和数据
     const option = {
       title: {
-        text: props.yname,
+        text: props.title,
+        textStyle: {
+          fontSize: 12, // 设置标题字体大小
+          // 其他样式属性
+        },
+      },
+      grid: {
+        left: "8%",
       },
       tooltip: {
         trigger: "axis",
@@ -54,6 +62,9 @@ onMounted(() => {
       },
       yAxis: {
         type: "value",
+        name: props.yname,
+        namelocation: "start",
+        nameGap: 15,
         axisLabel: {
           formatter: function (value: number) {
             if (value >= 100000) {
@@ -82,20 +93,25 @@ onMounted(() => {
     myChart.setOption(option);
 
     // 监听数据变化
-    watch(props, () => {
-      // 当数据变化时重新渲染图表
-      myChart.setOption({
-        xAxis: {
-          data: props.xdata,
-          name: props.xname,
-        },
-        series: [
-          {
-            data: props.ydata,
-          },
-        ],
-      });
-    });
+    watch(
+      () => props.xdata,
+      (newXdata, oldXdata) => {
+        if (JSON.stringify(newXdata) !== JSON.stringify(oldXdata)) {
+          // 当数据变化时重新渲染图表
+          myChart.setOption({
+            xAxis: {
+              data: props.xdata,
+              name: props.xname,
+            },
+            series: [
+              {
+                data: props.ydata,
+              },
+            ],
+          });
+        }
+      }
+    );
   }
 });
 </script>

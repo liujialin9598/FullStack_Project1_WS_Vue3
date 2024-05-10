@@ -53,44 +53,44 @@ onBeforeMount(async () => {
   try {
     loading.value = true;
     // 请求表格结构
-    const localapiData =
+    const Multi_localapiData =
       localStorage.getItem("default_value_for_api_m1s2") || "";
-    if (!localapiData || localapiData.length < 5) {
-      const response = await axios.get("/api/m1s2/");
+    if (!Multi_localapiData || Multi_localapiData.length < 5) {
+      const Multi_response = await axios.get("/api/m1s2/");
       localStorage.setItem(
         "default_value_for_api_m1s2",
-        JSON.stringify(response.data)
+        JSON.stringify(Multi_response.data)
       );
-      data.value = response.data;
+      data.value = Multi_response.data;
     } else {
-      data.value = JSON.parse(localapiData);
+      data.value = JSON.parse(Multi_localapiData);
     }
 
     // 请求表格default数据
-    const localData = localStorage.getItem("default_value_for_m1s2") || "";
-    if (!localData || localData.length < 5) {
-      const response_default = await axios.get("/api/m1s2/default/");
-      Object.assign(form, response_default.data);
+    const Multi_localData = localStorage.getItem("default_value_for_m1s2") || "";
+    if (!Multi_localData || Multi_localData.length < 5) {
+      const Multi_response_default = await axios.get("/api/m1s2/default/");
+      Object.assign(form, Multi_response_default.data);
       localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
     } else {
-      const response_default = JSON.parse(localData);
-      Object.assign(form, response_default);
+      const Multi_response_default = JSON.parse(Multi_localData);
+      Object.assign(form, Multi_response_default);
     }
 
     //请求数据
-    const localResultData =
+    const Multi_localResultData =
       localStorage.getItem("default_value_for_m1s2_result") || "";
-    if (!localResultData || localResultData.length < 5) {
-      const response = await axios.get("/api/m1s2/result/", {
+    if (!Multi_localResultData || Multi_localResultData.length < 5) {
+      const Multi_response = await axios.get("/api/m1s2/result/", {
         params: form,
       });
-      resultData.value = JSON.parse(response.data);
+      resultData.value = JSON.parse(Multi_response.data);
       localStorage.setItem(
         "default_value_for_m1s2_result",
         JSON.stringify(resultData.value)
       );
     } else {
-      resultData.value = JSON.parse(localResultData);
+      resultData.value = JSON.parse(Multi_localResultData);
     }
   } catch (err: any) {
     error.value = err.message || "Failed to fetch data";
@@ -106,19 +106,19 @@ const onSubmit = async () => {
   localStorage.removeItem("default_value_for_m1s2_result");
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
   //更新表格数据
-  const response = await axios.get("/api/m1s2/result/", {
+  const Multi_response = await axios.get("/api/m1s2/result/", {
     params: form,
   });
-  localStorage.setItem("default_value_for_m1s2_result", response.data);
-  resultData.value = JSON.parse(response.data);
+  localStorage.setItem("default_value_for_m1s2_result", Multi_response.data);
+  resultData.value = JSON.parse(Multi_response.data);
   loading.value = false;
 };
 
 const getDefaultValue = async () => {
   localStorage.removeItem("default_value_for_m1s2");
   localStorage.removeItem("default_value_for_api_m1s2");
-  const response_default = await axios.get("/api/m1s2/default/");
-  Object.assign(form, response_default.data);
+  const Multi_response_default = await axios.get("/api/m1s2/default/");
+  Object.assign(form, Multi_response_default.data);
   localStorage.setItem("default_value_for_m1s2", JSON.stringify(form));
 };
 

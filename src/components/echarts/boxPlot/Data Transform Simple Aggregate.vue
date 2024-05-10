@@ -29,8 +29,6 @@ onMounted(() => {
     const myChart = echarts.init(echartsContainer.value);
     echarts.registerTransform(ecSimpleTransform.aggregate);
 
-    console.log("pro", props);
-
     function transformData(obj) {
       const result = [];
 
@@ -94,12 +92,18 @@ onMounted(() => {
           ],
         },
       ],
+      grid: {
+        bottom: "5%", // 将底部空白区域设置为 10%
+      },
       title: {
         text: props.title,
       },
       tooltip: {
         trigger: "axis",
         confine: true,
+        textStyle: {
+          align: "left", // 设置文字左对齐
+        },
         valueFormatter: (value: number) => {
           if (value > 100) {
             return parseFloat(value.toFixed(0)).toLocaleString("en-US"); // 将大于10的数字四舍五入为整数
@@ -121,10 +125,9 @@ onMounted(() => {
       xAxis: {
         name: props.xname,
         type: "category",
+        nameGap: 5,
       },
-      grid: {
-        bottom: 100,
-      },
+
       legend: {
         selected: { detail: false },
       },
@@ -185,17 +188,22 @@ onMounted(() => {
     myChart.setOption(option);
 
     // 监听数据变化
-    watch(props, () => {
-      // 当数据变化时重新渲染图表
-      myChart.setOption({
-        dataset: [
-          {
-            id: "raw",
-            source: transformData(props),
-          },
-        ],
-      });
-    });
+    watch(
+      () => props.xdata,
+      (newXdata, oldXdata) => {
+        if (JSON.stringify(newXdata) !== JSON.stringify(oldXdata)) {
+          // 当数据变化时重新渲染图表
+          myChart.setOption({
+            dataset: [
+              {
+                id: "raw",
+                source: transformData(props),
+              },
+            ],
+          });
+        }
+      }
+    );
   };
 });
 </script>

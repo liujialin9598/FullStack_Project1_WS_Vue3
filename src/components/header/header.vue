@@ -5,27 +5,20 @@
     mode="horizontal"
     :ellipsis="false"
     @select="handleSelect"
+    :router="true"
   >
-    <el-menu-item index="0">
+    <el-menu-item>
       <img
-        style="width: 100px"
+        style="width: 100px; align-items: center"
         src="/images/windlestone-logo.png"
         alt="Element logo"
-      />
-    </el-menu-item>
+    /></el-menu-item>
     <div class="flex-grow" />
-    <el-menu-item index="1">Processing Center</el-menu-item>
-    <el-sub-menu index="2">
+    <el-menu-item index="/">Welcome Page</el-menu-item>
+    <el-sub-menu index="">
       <template #title>Workspace</template>
-      <el-menu-item index="2-1">item one</el-menu-item>
-      <el-menu-item index="2-2">item two</el-menu-item>
-      <el-menu-item index="2-3">item three</el-menu-item>
-      <el-sub-menu index="2-4">
-        <template #title>item four</template>
-        <el-menu-item index="2-4-1">item one</el-menu-item>
-        <el-menu-item index="2-4-2">item two</el-menu-item>
-        <el-menu-item index="2-4-3">item three</el-menu-item>
-      </el-sub-menu>
+      <el-menu-item index="/Sone">Simulation One</el-menu-item>
+      <el-menu-item index="/m2s1">Simulation Two</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
@@ -43,8 +36,8 @@ const handleSelect = (key: string, keyPath: string[]) => {
 .flex-grow {
   flex-grow: 1;
 }
-.header_menu{
-    width: 100%;
-    height: 100%;
+.header_menu {
+  width: 100%;
+  height: 100%;
 }
 </style>

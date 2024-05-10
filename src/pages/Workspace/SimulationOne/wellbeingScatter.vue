@@ -7,16 +7,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, watchEffect } from "vue";
 import * as echarts from "echarts";
-const props = defineProps(["ydata", "xdata", "xname", "yname", "title"]);
+const props = defineProps([
+  "ydata",
+  "xdata",
+  "xname",
+  "yname",
+  "title",
+  "ρ",
+  "K1",
+]);
 const echartsContainer = ref<HTMLElement | null>(null);
 
+let dataArray = ref<any>([]);
+
 onMounted(() => {
+  for (let i = 0; i <= 10; i += 0.1) {
+    dataArray.value.push([
+      i.toFixed(4),
+      (i ** (1 - props.ρ) / (1 - props.ρ) - props.K1).toFixed(4),
+    ]);
+  }
+
   if (echartsContainer.value) {
     // 初始化 ECharts 实例
     const myChart = echarts.init(echartsContainer.value);
-    console.log("pro", props.xdata);
 
     // 设置图表配置项和数据
     const option = {
@@ -26,6 +42,9 @@ onMounted(() => {
             element,
             props.ydata[index],
           ]),
+        },
+        {
+          source: dataArray.value,
         },
       ],
       title: {
@@ -41,22 +60,22 @@ onMounted(() => {
         axisPointer: {
           type: "cross",
         },
-        formatter: function (params: never[]) {
-          let data = params; // 如果 params.value 为 undefined，则将 data 设为一个空数组
-          console.log(data);
-          let max = Math.max(
-            ...data.map((item: { [x: string]: any[] }) =>
-              item["value"][1].toFixed(2)
-            )
-          );
-          let min = Math.min(
-            ...data.map((item: { [x: string]: any[] }) =>
-              item["value"][1].toFixed(2)
-            )
-          );
+        // formatter: function (params: never[]) {
+        //   console.log(params);
+        //   let data = params; // 如果 params.value 为 undefined，则将 data 设为一个空数组
+        //   let max = Math.max(
+        //     ...data.map((item: { [x: string]: any[] }) =>
+        //       item["value"][1].toFixed(2)
+        //     )
+        //   );
+        //   let min = Math.min(
+        //     ...data.map((item: { [x: string]: any[] }) =>
+        //       item["value"][1].toFixed(2)
+        //     )
+        //   );
 
-          return "max: " + max + "<br/>min: " + min;
-        },
+        //   return "max: " + max + "<br/>min: " + min;
+        // },
         valueFormatter: (value: number) => {
           if (value > 10) {
             return parseFloat(value.toFixed(0)).toLocaleString("en-US"); // 将大于10的数字四舍五入为整数
@@ -103,6 +122,12 @@ onMounted(() => {
           type: "scatter",
           datasetIndex: 0,
         },
+        {
+          name: "line",
+          type: "line",
+          datasetIndex: 1,
+          symbol: "none",
+        },
       ],
     };
 
@@ -114,15 +139,24 @@ onMounted(() => {
       () => props.xdata,
       (newXdata, oldXdata) => {
         if (JSON.stringify(newXdata) !== JSON.stringify(oldXdata)) {
+          let dataArray = ref<any>([]);
+          for (let i = 0; i <= 10; i += 0.1) {
+            dataArray.value.push([
+              i.toFixed(2),
+              (i ** (1 - props.ρ) / (1 - props.ρ) - props.K1).toFixed(2),
+            ]);
+          }
           // 当数据变化时重新渲染图表
           myChart.setOption({
-            xAxis: {
-              data: props.xdata,
-              name: props.xname,
-            },
-            series: [
+            dataset: [
               {
-                data: props.ydata,
+                source: props.xdata.map((element: number, index: number) => [
+                  element,
+                  props.ydata[index],
+                ]),
+              },
+              {
+                source: dataArray.value,
               },
             ],
           });

@@ -2,7 +2,7 @@
   <div
     class="echarts-container"
     ref="echartsContainer"
-    style="width: 350px; height: 350px"
+    style="width: 100%; height: 100%"
   ></div>
 </template>
 
@@ -17,6 +17,7 @@ const props = defineProps([
   "y1name",
   "y2name",
   "y1data",
+  "title",
   "y2data",
   "yAxisMinMax",
 ]);
@@ -30,7 +31,11 @@ onMounted(() => {
     // 设置图表配置项和数据
     const option = {
       title: {
-        text: props.yname,
+        text: props.title,
+        textStyle: {
+          fontSize: 12, // 设置标题字体大小
+          // 其他样式属性
+        },
       },
       tooltip: {
         trigger: "axis",
@@ -76,6 +81,7 @@ onMounted(() => {
           [props.y1name]: false,
           [props.y2name]: false,
         },
+        top: "10%",
       },
       series: [
         {
@@ -103,35 +109,40 @@ onMounted(() => {
     myChart.setOption(option);
 
     // 监听数据变化
-    watch(props, () => {
-      // 当数据变化时重新渲染图表
-      myChart.setOption({
-        xAxis: {
-          data: props.xdata,
-          name: props.xname,
-        },
-        series: [
-          {
-            data: props.ydata,
-            name: props.yname,
-            type: "line",
-            smooth: true,
-          },
-          {
-            data: props.y1data,
-            name: props.y1name,
-            type: "line",
-            smooth: true,
-          },
-          {
-            data: props.y2data,
-            name: props.y2name,
-            type: "line",
-            smooth: true,
-          },
-        ],
-      });
-    });
+    watch(
+      () => props.xdata,
+      (newXdata, oldXdata) => {
+        if (JSON.stringify(newXdata) !== JSON.stringify(oldXdata)) {
+          // 当数据变化时重新渲染图表
+          myChart.setOption({
+            xAxis: {
+              data: props.xdata,
+              name: props.xname,
+            },
+            series: [
+              {
+                data: props.ydata,
+                name: props.yname,
+                type: "line",
+                smooth: true,
+              },
+              {
+                data: props.y1data,
+                name: props.y1name,
+                type: "line",
+                smooth: true,
+              },
+              {
+                data: props.y2data,
+                name: props.y2name,
+                type: "line",
+                smooth: true,
+              },
+            ],
+          });
+        }
+      }
+    );
   }
 });
 </script>

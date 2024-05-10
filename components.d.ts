@@ -30,6 +30,7 @@ declare module 'vue' {
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTableV2: typeof import('element-plus/es')['ElTableV2']
+    Formular: typeof import('./src/components/echarts/formular/formular.vue')['default']
     Header: typeof import('./src/components/header/header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
