@@ -701,14 +701,14 @@ onBeforeMount(async () => {
     loading.value = true;
     //#region 获取本地初始化数据
     let localapiDataStr =
-      localStorage.getItem("default_value_for_simulation_one") || "";
+      localStorage.getItem("default_value_for_simulation_two") || "";
 
     // 如果没有本地数据, 那么请求远程数据
     if (!localapiDataStr || localapiDataStr.length < 5) {
       const response = await axios.get("/api/stwo/");
       //存储本地数据
       localStorage.setItem(
-        "default_value_for_simulation_one",
+        "default_value_for_simulation_two",
         JSON.stringify(response.data)
       );
       Object.assign(apiData, response.data);
@@ -721,14 +721,14 @@ onBeforeMount(async () => {
 
     //#region 获取本地onesim数据
     const localonesimData =
-      localStorage.getItem("default_value_for_s1single") || "";
+      localStorage.getItem("default_value_for_s2single") || "";
 
     //如果没有本地数据, 那么请求远程数据
     if (!localonesimData || localonesimData.length < 5) {
       const response = await axios.get("/api/stwo/onesim/", {
         params: apiData,
       });
-      localStorage.setItem("default_value_for_s1single", response.data);
+      localStorage.setItem("default_value_for_s2single", response.data);
       oneResultData.value = JSON.parse(response.data);
     } else {
       oneResultData.value = JSON.parse(localonesimData);
@@ -737,14 +737,14 @@ onBeforeMount(async () => {
 
     //#region 获取本地multisim数据
     const localmultisimData =
-      localStorage.getItem("default_value_for_s1multi") || "";
+      localStorage.getItem("default_value_for_s2multi") || "";
 
     // 如果没有本地数据, 那么请求远程数据
     if (!localmultisimData || localmultisimData.length < 5) {
       const response = await axios.get("/api/stwo/multisim/", {
         params: apiData,
       });
-      localStorage.setItem("default_value_for_s1multi", response.data);
+      localStorage.setItem("default_value_for_s2multi", response.data);
       multiResultData.value = JSON.parse(response.data);
     } else {
       multiResultData.value = JSON.parse(localmultisimData);
@@ -762,13 +762,13 @@ onBeforeMount(async () => {
 const onSubmitOne = async () => {
   loading.value = true;
   localStorage.setItem(
-    "default_value_for_simulation_one",
+    "default_value_for_simulation_two",
     JSON.stringify(apiData)
   );
   const response = await axios.get("/api/stwo/onesim/", {
     params: apiData,
   });
-  localStorage.setItem("default_value_for_s1single", response.data);
+  localStorage.setItem("default_value_for_s2single", response.data);
   oneResultData.value = JSON.parse(response.data);
   loading.value = false;
 };
@@ -781,9 +781,9 @@ const onSubmitMulti = async () => {
     params: apiData,
   });
   const jstr = JSON.stringify(apiData);
-  localStorage.setItem("default_value_for_simulation_one", jstr);
+  localStorage.setItem("default_value_for_simulation_two", jstr);
   localapiData.value = JSON.parse(jstr);
-  localStorage.setItem("default_value_for_s1multi", response.data);
+  localStorage.setItem("default_value_for_s2multi", response.data);
   multiResultData.value = JSON.parse(response.data);
   loading.value = false;
 };
