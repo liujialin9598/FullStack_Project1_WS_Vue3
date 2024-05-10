@@ -18,7 +18,7 @@
     <el-sub-menu index="">
       <template #title>Workspace</template>
       <el-menu-item index="/Sone">Simulation One</el-menu-item>
-      <el-menu-item index="/m2s1">Simulation Two</el-menu-item>
+      <el-menu-item index="/Stwo">Simulation Two</el-menu-item>
     </el-sub-menu>
   </el-menu>
 </template>
