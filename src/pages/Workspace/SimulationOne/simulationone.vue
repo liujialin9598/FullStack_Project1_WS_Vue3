@@ -6,8 +6,8 @@
     <h1>Simulation output distribution</h1>
     <br /><br />
     <p>
-      The following graphs illustrate the distribution of lifetime well-being and
-      the distribution of age at death across these simulations.
+      The following graphs illustrate the distribution of lifetime well-being
+      and the distribution of age at death across these simulations.
     </p>
     <br />
     <div class="bars">
@@ -53,6 +53,7 @@
         <p>Simulation times</p>
         <el-input
           v-model="apiData.simulationtimes.value"
+          @keyup.enter="onSubmitMulti"
           :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
           :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
         />
@@ -178,11 +179,19 @@
         >
           <div>
             <p>ρ</p>
-            <el-input v-model="apiData.ρ.value" style="width: 150px" />
+            <el-input
+              @keyup.enter="onSubmitOne"
+              v-model="apiData.ρ.value"
+              style="width: 150px"
+            />
           </div>
           <div>
             <p>K<sub>1</sub></p>
-            <el-input v-model="apiData.K1.value" style="width: 150px" />
+            <el-input
+              @keyup.enter="onSubmitOne"
+              v-model="apiData.K1.value"
+              style="width: 150px"
+            />
           </div>
           <div>
             <el-button class="button" @click="onSubmitOne"
@@ -256,11 +265,19 @@
         >
           <div>
             <p>γ</p>
-            <el-input v-model="apiData.γ.value" style="width: 150px" />
+            <el-input
+              @keyup.enter="onSubmitOne"
+              v-model="apiData.γ.value"
+              style="width: 150px"
+            />
           </div>
           <div>
             <p>K<sub>2</sub></p>
-            <el-input v-model="apiData.K2.value" style="width: 150px" />
+            <el-input
+              @keyup.enter="onSubmitOne"
+              v-model="apiData.K2.value"
+              style="width: 150px"
+            />
           </div>
           <div>
             <el-button class="button" @click="onSubmitOne"
@@ -311,6 +328,7 @@
       <div class="parameters">
         <p>B<sub>0</sub></p>
         <el-input
+          @keyup.enter="onSubmitOne"
           v-model="apiData.Bt.value"
           :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
           :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -371,6 +389,7 @@
         <div class="parameters">
           <p>B<sub>0</sub></p>
           <el-input
+            @keyup.enter="onSubmitOne"
             v-model="apiData.Bt.value"
             :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
             :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -378,6 +397,7 @@
           <br />
           <p>AT<sub>min</sub></p>
           <el-input
+            @keyup.enter="onSubmitOne"
             v-model="apiData.AT_min.value"
             :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
             :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -385,13 +405,14 @@
           <br />
           <p>AT<sub>max</sub></p>
           <el-input
+            @keyup.enter="onSubmitOne"
             v-model="apiData.AT_max.value"
             :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
             :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
           />
           <br />
           <p>RWG</p>
-          <el-input v-model="apiData.RWG.value" />
+          <el-input v-model="apiData.RWG.value" @keyup.enter="onSubmitOne" />
           <br />
 
           <el-button
@@ -530,16 +551,16 @@
       </div>
       <div class="parameters">
         <p>[γ<sub>0</sub> , γ<sub>1</sub> ...]</p>
-        <el-input v-model="apiData.γ_group.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.γ_group.value" />
         <br />
         <p>σport</p>
-        <el-input v-model="apiData.σport.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.σport.value" />
         <br />
         <p>RIR</p>
-        <el-input v-model="apiData.RIR.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.RIR.value" />
         <br />
         <p>MRP</p>
-        <el-input v-model="apiData.MRP.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.MRP.value" />
         <br />
 
         <el-button
@@ -584,8 +605,9 @@
         ></SmoothedLineChart>
       </div>
       <div class="parameters">
-        <p>P</p>
+        <p>P<sub>0</sub></p>
         <el-input
+          @keyup.enter="onSubmitOne"
           v-model="apiData.Pt.value"
           :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
           :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
@@ -647,16 +669,16 @@
       </div>
       <div class="parameters">
         <p>σ<sub>inf</sub></p>
-        <el-input v-model="apiData.σinf.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.σinf.value" />
         <br />
         <p>Inf_Eq</p>
-        <el-input v-model="apiData.Inf_Eq.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.Inf_Eq.value" />
         <br />
         <p>α<sub>1</sub></p>
-        <el-input v-model="apiData.α1.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.α1.value" />
         <br />
         <p>α<sub>2</sub></p>
-        <el-input v-model="apiData.α2.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.α2.value" />
         <br />
         <p>
           moving average weight of Z
@@ -664,7 +686,7 @@
             >([λ<sub>1</sub>,λ<sub>2</sub>,...,λ<sub>n</sub>])</span
           >
         </p>
-        <el-input v-model="apiData.Z_group.value" />
+        <el-input @keyup.enter="onSubmitOne" v-model="apiData.Z_group.value" />
         <br />
 
         <el-button
