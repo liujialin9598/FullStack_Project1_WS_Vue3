@@ -56,6 +56,7 @@
           v-model="apiData.simulationtimes.value"
           :parser="(value:any) => value.replace(/\$\s?|(,*)/g, '')"
           :formatter="(value: any) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')"
+          :validate-event="true"
         />
 
         <el-button class="button" @click="onSubmitMulti"
@@ -179,11 +180,19 @@
         >
           <div>
             <p>ρ</p>
-            <el-input @keyup.enter="onSubmitOne" v-model="apiData.ρ.value" style="width: 150px" />
+            <el-input
+              @keyup.enter="onSubmitOne"
+              v-model="apiData.ρ.value"
+              style="width: 150px"
+            />
           </div>
           <div>
             <p>K<sub>1</sub></p>
-            <el-input @keyup.enter="onSubmitOne" v-model="apiData.K1.value" style="width: 150px" />
+            <el-input
+              @keyup.enter="onSubmitOne"
+              v-model="apiData.K1.value"
+              style="width: 150px"
+            />
           </div>
           <div>
             <el-button class="button" @click="onSubmitOne"
