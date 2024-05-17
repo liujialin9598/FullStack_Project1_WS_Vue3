@@ -3,7 +3,7 @@
     <!-- #region multiple simulation -->
 
     <!-- #region Output Distributions -->
-    <h1>Simulation output distribution</h1>
+    <h1>Simulation 1 output distribution</h1>
     <br /><br />
     <p>
       The following graphs illustrate the distribution of lifetime well-being
