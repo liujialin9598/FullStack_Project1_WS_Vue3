@@ -11,6 +11,7 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
+    "@gtm-support/vue-gtm": "^3.0.1",
     "axios": "^1.6.8",
     "echarts": "^5.5.0",
     "echarts-stat": "^1.2.0",
